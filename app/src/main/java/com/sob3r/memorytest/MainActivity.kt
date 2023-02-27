@@ -3,6 +3,7 @@ package com.sob3r.memorytest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.PopupWindow
 import com.sob3r.memorytest.utils.MemTest
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +28,12 @@ class MainActivity : AppCompatActivity() {
             memFunc.mStartTime = 4000
             memFunc.iteration = 0
             memFunc.startGame()
+        }
+
+        val settingsButton: Button = findViewById(R.id.btnSettings)
+        settingsButton.setOnClickListener {
+            val wtf = Settings()
+            wtf.show(supportFragmentManager, "tag")
         }
 
     }

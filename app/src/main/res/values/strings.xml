@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Memory Test</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_set">Set</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="settings_themes">Themes</string>
+    <string name="settings_btnSize">Buttons size</string>
+    <string name="settings_difficult">Difficulty</string>
 </resources>
