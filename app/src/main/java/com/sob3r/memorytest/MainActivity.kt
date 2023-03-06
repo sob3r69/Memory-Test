@@ -3,10 +3,17 @@ package com.sob3r.memorytest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.PopupWindow
+import androidx.fragment.app.DialogFragment
 import com.sob3r.memorytest.utils.MemTest
+import com.sob3r.memorytest.utils.SettingsData
 
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity(), Settings.SettingsDialogListener {
+
+    private val settingsData = SettingsData()
+
+    private var btnSize: Int = settingsData.button1xSize
+    private var difficulty: Int = settingsData.defDifficulty
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,20 +28,51 @@ class MainActivity : AppCompatActivity() {
         val btn5: Button = findViewById(R.id.randBtn5)
         val butts = listOf(btn1, btn2, btn3, btn4, btn5)
 
-        val memFunc = MemTest(this, scrWidth, scrHeight, butts)
+        val memFunc = MemTest(this)
+        val startBtn: Button = findViewById(R.id.startBtn)
+        startBtn.setOnClickListener {
+            memFunc.setScreenSize(scrWidth, scrHeight)
+            memFunc.setButtons(butts)
+            memFunc.setButtonSize(btnSize)
+            memFunc.setDifficulty(difficulty)
 
-        val generateBtn: Button = findViewById(R.id.genRand)
-        generateBtn.setOnClickListener {
             memFunc.mStartTime = 4000
-            memFunc.iteration = 0
+            memFunc.mIteration = 0
             memFunc.startGame()
         }
 
         val settingsButton: Button = findViewById(R.id.btnSettings)
         settingsButton.setOnClickListener {
-            val wtf = Settings()
-            wtf.show(supportFragmentManager, "tag")
+            val settingsWindow = Settings()
+            settingsWindow.show(supportFragmentManager, "tag")
         }
+    }
 
+    override fun btnSize1x() {
+        btnSize = settingsData.button1xSize
+    }
+    override fun btnSize15x() {
+        btnSize = settingsData.button15xSize
+        println("<<< Changed button size")
+    }
+
+    override fun defDifficulty() {
+        difficulty = settingsData.defDifficulty
+    }
+
+    override fun medDifficulty() {
+        difficulty = settingsData.medDifficulty
+    }
+
+    override fun hardDifficulty() {
+        difficulty = settingsData.hardDifficulty
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        TODO("Not yet implemented")
     }
 }
